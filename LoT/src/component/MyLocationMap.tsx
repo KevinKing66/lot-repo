@@ -30,7 +30,7 @@ const MyLocationMap = () => {
 
         dispatch({ type: 'SET_POSITION', payload: newPosition });
 
-
+        
         if (mapRef.current) {
           mapRef.current.panTo(newPosition);
         }
@@ -59,9 +59,6 @@ const MyLocationMap = () => {
       center={position}
       zoom={16}
       options={{ clickableIcons: false }}
-      onLoad={(map: google.maps.Map) => {
-        mapRef.current = map;
-      }}
     >
       <Marker position={position} />
     </GoogleMap>

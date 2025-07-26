@@ -13,7 +13,7 @@ export function setupWebSocket(server: Server<typeof IncomingMessage, typeof Ser
     const token = url.searchParams.get("token");
 
     if (!token || typeof token !== 'string') {
-      ws.close(1008, JSON.stringify({ error: "Token is required" }));
+      ws.close(4001, JSON.stringify({ error: "Token is required" }));
       return;
     }
 
@@ -21,7 +21,7 @@ export function setupWebSocket(server: Server<typeof IncomingMessage, typeof Ser
     const user = await authService.getUserFromToken(token);
 
     if (!user) {
-      ws.close(1008, "Token inválido");
+      ws.close(4001, "Token inválido");
       return;
     }
     console.log(`User ${user.email} connected via WebSocket`);

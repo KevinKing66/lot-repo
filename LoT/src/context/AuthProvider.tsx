@@ -27,18 +27,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         const data = await res.json();
         setToken(data.token);
-        setIsAuthenticated(true);
     };
 
     const logout = () => {
-        setToken(null)
-        setIsAuthenticated(false);
+        setToken(null);
     };
     
     useEffect(() => {
-        if(!isAuthenticated && token){
-            setIsAuthenticated(true);
-        }
+        setIsAuthenticated(!!token);
     }, [isAuthenticated, token])
 
     return (<AuthContext.Provider value={{ login, logout, isAuthenticated, token }}> {children} </AuthContext.Provider>);

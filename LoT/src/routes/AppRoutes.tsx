@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import { Login } from "../pages/Login";
 import { Home } from "../pages/Home";
@@ -17,6 +17,7 @@ const AppRoutes: React.FC = () => {
             <Routes>
                 <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 <Route path="/maps" element={<ProtectedRoute><MapsPage /></ProtectedRoute>} />
+                <Route path="/*" element={<ProtectedRoute><Navigate to="/" replace /></ProtectedRoute>} />
             </Routes>
 
         </Router>
