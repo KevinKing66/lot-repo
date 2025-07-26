@@ -1,65 +1,18 @@
-// import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-// import { useEffect, useState } from 'react';
-
-// const containerStyle = {
-//   width: '100%',
-//   height: '400px'
-// };
-
-// const MyLocationMap = () => {
-//   const [position, setPosition] = useState<google.maps.LatLngLiteral | null>(null);
-
-//   const { isLoaded } = useJsApiLoader({
-//     googleMapsApiKey: 'TU_API_KEY_AQUI', // reemplaza con tu key
-//   });
-
-//   useEffect(() => {
-//     navigator.geolocation.getCurrentPosition(
-//       (pos) => {
-//         setPosition({
-//           lat: pos.coords.latitude,
-//           lng: pos.coords.longitude,
-//         });
-//       },
-//       (err) => {
-//         console.error('Error al obtener la ubicación', err);
-//       }
-//     );
-//   }, []);
-
-//   if (!isLoaded) return <p>Cargando mapa...</p>;
-//   if (!position) return <p>Obteniendo ubicación...</p>;
-
-//   return (
-//     <GoogleMap
-//       mapContainerStyle={containerStyle}
-//       center={position}
-//       zoom={15}
-//     >
-//       <Marker position={position} />
-//     </GoogleMap>
-//   );
-// };
-
-// export default MyLocationMap;
-
-
-
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { locationReducer } from '../reducers/locationReducer';
 
 const containerStyle = {
   width: '100%',
-  height: '400px'
+  height: '400px',
 };
 
 const MyLocationMap = () => {
   const [position, dispatch] = useReducer(locationReducer, null);
-    const apiKey = import.meta.env.VITE_MAPS_API_KEY;
+  const mapRef = useRef<google.maps.Map | null>(null);
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: apiKey,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
   useEffect(() => {
@@ -67,23 +20,27 @@ const MyLocationMap = () => {
       console.error('Geolocalización no soportada');
       return;
     }
-
+    const timeRefreshPosition: number = 5000;
     const watchId = navigator.geolocation.watchPosition(
       (pos) => {
-        dispatch({
-          type: 'SET_POSITION',
-          payload: {
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
-          },
-        });
+        const newPosition = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        };
+
+        dispatch({ type: 'SET_POSITION', payload: newPosition });
+
+
+        if (mapRef.current) {
+          mapRef.current.panTo(newPosition);
+        }
       },
       (err) => {
         console.error('Error al obtener la ubicación en tiempo real', err);
       },
       {
         enableHighAccuracy: true,
-        maximumAge: 10000,
+        maximumAge: timeRefreshPosition,
         timeout: 10000,
       }
     );
@@ -100,7 +57,11 @@ const MyLocationMap = () => {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={position}
-      zoom={15}
+      zoom={16}
+      options={{ clickableIcons: false }}
+      onLoad={(map: google.maps.Map) => {
+        mapRef.current = map;
+      }}
     >
       <Marker position={position} />
     </GoogleMap>
