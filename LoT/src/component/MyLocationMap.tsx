@@ -56,9 +56,10 @@ const containerStyle = {
 
 const MyLocationMap = () => {
   const [position, dispatch] = useReducer(locationReducer, null);
+    const apiKey = import.meta.env.VITE_MAPS_API_KEY;
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: 'TU_API_KEY_AQUI', // pon tu key real aquí
+    googleMapsApiKey: apiKey,
   });
 
   useEffect(() => {
