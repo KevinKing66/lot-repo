@@ -1,6 +1,8 @@
 import { FuelChart } from "../component/FuelChart";
 import { SpeedChart } from "../component/SpeedChart"
+import { SpeedFuelChart } from "../component/SpeedxFuelChart";
 import type { SensorData } from '../types/sensor-data';
+import { mapToSpeedFuelChartData } from "../utils/utils";
 
 export const Home = () => {
   const data: SensorData[] =  [
@@ -43,12 +45,14 @@ export const Home = () => {
     },
   },
 ];
+const speedXFuel = mapToSpeedFuelChartData(data);
   return (
     <div>
       <div>Home</div>
       <div>
         <SpeedChart data={data}></SpeedChart>
         <FuelChart data={data}></FuelChart>
+        <SpeedFuelChart data={speedXFuel}></SpeedFuelChart>
       </div>
     </div>
   )

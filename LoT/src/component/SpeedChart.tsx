@@ -20,7 +20,7 @@ export const SpeedChart: React.FC<Props> = ({ data }) => {
         <YAxis label={{ value: 'km/h', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <CartesianGrid stroke="#ccc" />
-        <Line type="monotone" dataKey="speed" stroke="#8884d8" strokeWidth={2} />
+        <Line type="monotone" dataKey="speed" stroke="#8884d8" strokeWidth={2} name="Velocidad" />
       </LineChart>
     </ResponsiveContainer>
     </>

@@ -20,7 +20,7 @@ export const FuelChart: React.FC<Props> = ({ data }) => {
           <YAxis label={{ value: 'Litros', angle: -90, position: 'insideLeft' }} />
           <Tooltip />
           <CartesianGrid stroke="#ccc" />
-          <Bar dataKey="fuel" fill="#58cc85ff" label="combustible" />
+          <Bar dataKey="fuel" fill="#58cc85ff" name="combustible" />
         </BarChart>
       </ResponsiveContainer>
     </>
