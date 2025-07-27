@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { useToken } from './useToken';
+import { useDeviceId } from './UserDeviceId';
+import type { SensorData } from '../types/sensor-data';
 
 export function useAuthenticatedWebSocket() {
   const [token, setToken] = useToken();
+  const deviceId = useDeviceId();
   const [isConnected, setIsConnected] = useState(false);
+  const [sensorData, setSensorData] = useState<SensorData | null>(null);
+
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || !deviceId) return;
 
     const hostname = import.meta.env.VITE_API_HOSTNAME;
-
     const wsUrl = `ws://${hostname}?token=${token}`;
     const socket = new WebSocket(wsUrl);
     socketRef.current = socket;
@@ -30,6 +34,10 @@ export function useAuthenticatedWebSocket() {
           setToken(null);
           socket.close();
         }
+
+        else if (data.deviceId === deviceId) {
+          setSensorData(data);
+        }
       } catch (err) {
         console.error('Error parsing WebSocket message:', err);
       }
@@ -44,6 +52,7 @@ export function useAuthenticatedWebSocket() {
         setToken(null);
       } else {
         console.warn('WebSocket cerrado, pero se conserva el token (posible desconexión de red)');
+        console.warn("event.code: ", event.code)
       }
     };
 
@@ -52,11 +61,12 @@ export function useAuthenticatedWebSocket() {
     };
 
     return () => {
-      socket.close();
+      // socket.close();
     };
-  }, [token, setToken]);
+  }, [token, setToken, deviceId, isConnected]);
 
   const sendMessage = (message: unknown) => {
+    console.log("Try to send msg to wss");
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify(message));
     } else {
@@ -64,8 +74,14 @@ export function useAuthenticatedWebSocket() {
     }
   };
 
+  const closeConnection = () => {
+    socketRef.current?.close();
+  };
+
   return {
     isConnected,
     sendMessage,
+    sensorData,
+    closeConnection
   };
 }
