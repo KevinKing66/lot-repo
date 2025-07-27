@@ -23,7 +23,6 @@ export function useAuthenticatedWebSocket() {
       try {
         const data = JSON.parse(event.data);
 
-        // ⚠️ Solo borrar token si el servidor explícitamente dice que es inválido
         if (data.type === 'error' && data.reason === 'invalid_token') {
           console.warn('❌ Token inválido, cerrando sesión');
           setToken(null);
