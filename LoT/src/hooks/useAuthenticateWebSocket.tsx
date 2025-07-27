@@ -9,7 +9,9 @@ export function useAuthenticatedWebSocket() {
   useEffect(() => {
     if (!token) return;
 
-    const wsUrl = `ws://localhost:3000?token=${token}`;
+    const hostname = import.meta.env.VITE_API_HOSTNAME;
+
+    const wsUrl = `ws://${hostname}?token=${token}`;
     const socket = new WebSocket(wsUrl);
     socketRef.current = socket;
 
