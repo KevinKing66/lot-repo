@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
 } from "typeorm";
 import { SensorDataDto } from "../dto/sensor-data.dto";
+import { maskDeviceId } from '../utils/mask';
 
 @Entity()
 export class SensorData {
@@ -36,9 +37,9 @@ export class SensorData {
   createdAt!: Date;
 
 
-  toDto?(): SensorDataDto {
+  toDto?(maskId: boolean = false): SensorDataDto {
     return {
-      deviceId: this.deviceId,
+      deviceId: maskId ? maskDeviceId(this.deviceId): this.deviceId,
       fuel: {
         current: this.currentFuelLiters,
         capacity: this.fuelCapacityLiters

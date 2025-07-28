@@ -32,14 +32,20 @@ export class SensorService {
     })
   }
 
-  async getHistoryByActiveAlarms() {
+  async getHistoryByActiveAlarms(token: string) {
+    const user = await this.authService.getUserFromToken(token);
+
+    if (!user) {
+      throw ("User not Exist");
+    }
+
     return (await this.repo
       .createQueryBuilder("sensor")
       .distinctOn(["sensor.deviceId"])
       .orderBy("sensor.deviceId", "ASC")
       .addOrderBy("sensor.createdAt", "DESC")
       .getMany())
-      .map(e => e.toDto!())
+      .map(e => e.toDto!(user.isAdmin()))
       .filter(e => e.gps.speed == 0 || this.isLowFuelAlert(e));
   }
 
