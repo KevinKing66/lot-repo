@@ -31,10 +31,10 @@ export const useLocation = () => {
                 console.log("hasChanged ", hasChanged);
                 dispatch({ type: "SET_POSITION", payload: current });
             }
-        }, 2000);
+        }, 500);
 
         return () => clearInterval(interval);
     }, [state]);
 
-    return { lat: 0, lng: 0, speed: 0 };
+    return state;
 };
