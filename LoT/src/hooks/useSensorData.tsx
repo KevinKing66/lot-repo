@@ -20,14 +20,14 @@ export const useSensorHistoryData = () => {
     const deviceID = useDeviceId();
 
     useEffect(() => {
-        if (!deviceID) return;
+        if (!deviceID)
         console.log("---------------------------------------use sensor history")
         const apiUrl = import.meta.env.VITE_API_URL;
         const headers = {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
         };
-        fetch(`${apiUrl}/sensor/history/`, { headers }
+        fetch(`${apiUrl}/sensor/history/${deviceID}`, { headers }
         )
             .then((res => res.json()))
             .then((data) => {
