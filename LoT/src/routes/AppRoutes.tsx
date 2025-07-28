@@ -6,11 +6,9 @@ import { Home } from "../pages/Home";
 import { MapsPage } from "../pages/Maps";
 import ProtectedRoute from "./ProtectedRoutes";
 import HeaderComponents from "../component/headers";
-import { useAuthenticatedWebSocket } from "../hooks/useAuthenticateWebSocket";
 
 const AppRoutes: React.FC = () => {
     const { isAuthenticated } = useAuth();
-    useAuthenticatedWebSocket();
 
     return (
         <Router>

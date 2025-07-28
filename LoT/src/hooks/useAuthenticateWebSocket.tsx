@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useToken } from './useToken';
 import { useDeviceId } from './UserDeviceId';
 import type { SensorData } from '../types/sensor-data';
+import { useLocation } from './useLocation';
 
 export function useAuthenticatedWebSocket() {
   const [token, setToken] = useToken();
@@ -9,7 +10,9 @@ export function useAuthenticatedWebSocket() {
   const [isConnected, setIsConnected] = useState(false);
   const [sensorData, setSensorData] = useState<SensorData | null>(null);
 
+  const gps = useLocation();
   const socketRef = useRef<WebSocket | null>(null);
+  const intervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!token || !deviceId) return;
@@ -19,9 +22,25 @@ export function useAuthenticatedWebSocket() {
     const socket = new WebSocket(wsUrl);
     socketRef.current = socket;
 
+    const data = {
+      deviceId,
+      gps,
+      "temperature": 87.5,
+      "fuel": {
+        "current": 5,
+        "capacity": 50
+      }
+    };
+
+
     socket.onopen = () => {
       console.log('✅ WebSocket connected');
       setIsConnected(true);
+      intervalRef.current = setInterval(() => {
+        if (socket.readyState === WebSocket.OPEN) {
+          sendMessage(data);
+        }
+      }, 2000);
     };
 
     socket.onmessage = (event) => {
@@ -46,6 +65,7 @@ export function useAuthenticatedWebSocket() {
     socket.onclose = (event) => {
       console.log(`🔌 WebSocket closed [${event.code}]: ${event.reason}`);
       setIsConnected(false);
+      if (intervalRef.current) clearInterval(intervalRef.current);
 
       if (event.code === 4001 || event.reason === 'invalid_token') {
         console.warn('Servidor cerró conexión por token inválido');
@@ -61,11 +81,15 @@ export function useAuthenticatedWebSocket() {
     };
 
     return () => {
+      // if (intervalRef.current) clearInterval(intervalRef.current);
       // socket.close();
     };
-  }, [token, setToken, deviceId, isConnected]);
+  }, [token, setToken, deviceId, isConnected, gps]);
 
   const sendMessage = (message: unknown) => {
+    if (!message) {
+      return;
+    }
     console.log("Try to send msg to wss");
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify(message));

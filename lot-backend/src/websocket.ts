@@ -25,7 +25,7 @@ export function setupWebSocket(server: Server<typeof IncomingMessage, typeof Ser
       return;
     }
     console.log(`User ${user.email} connected via WebSocket`);
-    ws.send(JSON.stringify({ message: `Welcome ${user.email}` }));
+    ws.send(JSON.stringify({ message: `Bienvenido ${user.email}` }));
 
 
     ws.on("message", async (data) => {
@@ -38,7 +38,7 @@ export function setupWebSocket(server: Server<typeof IncomingMessage, typeof Ser
         ws.send(JSON.stringify({ status: "ok", message: "Sensor data saved" }));
         
         if (res.estimatedHoursLeft < 1) {
-          ws.send(JSON.stringify({ alert: "Warning: Fuel level low — less than 1 hour of autonomy remaining."}));
+          ws.send(JSON.stringify({ alert: `Advertencia: poca gasolina — el vehículo ${payload.deviceId} tiene menos de 1 hora de autonomía`}));
         }
       } catch (err) {
         console.error("Error guardando sensor:", err);
