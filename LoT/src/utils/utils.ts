@@ -3,7 +3,7 @@ import type { SpeedFuelChartEntry } from "../types/speed-fuel-chart";
 
 export const mapToSpeedFuelChartData = (data: SensorData[]): SpeedFuelChartEntry[] => {
   return data.map((item) => ({
-    label: formatToMMDD(new Date(item.createdAt)),
+    label: formatToMMDD(new Date(item.createdAt!)),
     speed: item?.gps?.speed ?? 0,
     fuel: item?.fuel?.current ?? 0,
   }));

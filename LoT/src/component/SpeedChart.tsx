@@ -8,7 +8,7 @@ interface Props {
 
 export const SpeedChart: React.FC<Props> = ({ data }) => {
   const chartData = data.map((sensor) => ({
-    name: formatToMMDD(new Date(sensor.createdAt)),
+    name: formatToMMDD(new Date(sensor.createdAt!)),
     speed: sensor?.gps?.speed ?? 0
   }));
 

@@ -8,7 +8,7 @@ interface Props {
 
 export const FuelChart: React.FC<Props> = ({ data }) => {
   const chartData = data.map((sensor) => ({
-    name: formatToMMDD(new Date(sensor.createdAt)),
+    name: formatToMMDD(new Date(sensor.createdAt!)),
     fuel: sensor!.fuel?.current
   }));
 
