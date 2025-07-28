@@ -70,6 +70,7 @@ export function useAuthenticatedWebSocket() {
           setSensorData(data);
           sensorDataRef.current = data;
           console.log("sensorDataRef: ", sensorDataRef)
+          sendMessage(data)
         }
       }, 2000);
     };
