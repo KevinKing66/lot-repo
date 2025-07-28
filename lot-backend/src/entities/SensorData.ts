@@ -19,7 +19,7 @@ export class SensorData {
   @Column("float")
   longitude!: number;
 
-  @Column("float")
+  @Column("float", {default: 0})
   speed!: number;
 
   @Column("float")

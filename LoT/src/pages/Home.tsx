@@ -1,19 +1,19 @@
-import { useReducer } from "react";
 import { FuelChart } from "../component/FuelChart";
 import { SpeedChart } from "../component/SpeedChart"
 import { SpeedFuelChart } from "../component/SpeedxFuelChart";
 import { mapToSpeedFuelChartData } from "../utils/utils";
-import { useSensorData } from "../hooks/useSensorData";
+import { useSensorHistoryData } from "../hooks/useSensorData";
 
 export const Home = () => {
-  const [data,  ] = useReducer(useSensorData, null);
-  const speedXFuel = mapToSpeedFuelChartData(data?.sensors ?? []);
+  const {sensors: data} = useSensorHistoryData();
+  console.log("sensors: ", data);
+  const speedXFuel = mapToSpeedFuelChartData(data);
   return (
     <div>
       <div>DashBoard</div>
       <div>
-        <SpeedChart data={data?.sensors ?? []}></SpeedChart>
-        <FuelChart data={data?.sensors ?? []}></FuelChart>
+        <SpeedChart data={data}></SpeedChart>
+        <FuelChart data={data}></FuelChart>
         <SpeedFuelChart data={speedXFuel}></SpeedFuelChart>
       </div>
     </div>

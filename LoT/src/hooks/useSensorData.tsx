@@ -1,5 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { sensorsReducer, type SensorsState } from "../reducers/sensorsReducer";
+import { useDeviceId } from "./UserDeviceId";
+import { useToken } from "./useToken";
 
 const STORAGE_KEY = "sensors-data";
 
@@ -12,13 +14,21 @@ const init = (): SensorsState => {
     }
 };
 
-export const useSensorData = () => {
+export const useSensorHistoryData = () => {
     const [state, dispatch] = useReducer(sensorsReducer, undefined, init);
-    const deviceID = "";
+    const [token,] = useToken();
+    const deviceID = useDeviceId();
+    console.log("-------------hola");
 
-    useEffect(() => {    
+    useEffect(() => {
+        console.log("---------------------------------------use sensor history")
         const apiUrl = import.meta.env.VITE_API_URL;
-        fetch(`${apiUrl}/sensor/history/${deviceID}`)
+        const headers = {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            };
+        fetch(`${apiUrl}/sensor/history/${deviceID}`, { headers }
+        )
             .then((res => res.json()))
             .then((data) => {
                 dispatch({ type: "SET_DATA", payload: data });
@@ -32,14 +42,14 @@ export const useSensorData = () => {
 
         const interval = setInterval(() => {
             const raw = localStorage.getItem(STORAGE_KEY);
-            const current =  raw ? JSON.parse(raw) as SensorsState : null;
-            if (current !== state) {
+            const current = raw ? JSON.parse(raw) as SensorsState : null;
+            if (current?.sensors !== state.sensors) {
                 dispatch({ type: "SET_DATA", payload: current?.sensors ?? [] });
             }
-        }, 2000);
+        }, 10000);
 
         return () => clearInterval(interval);
-    }, [state]);
+    }, [state, deviceID]);
 
     return { sensors: state.sensors, dispatch };
 };

@@ -6,6 +6,7 @@ const controller = new SensorController();
 
 router.post("/data", controller.ingestData);
 router.post("/position/:deviceId", controller.getLastesPosition);
-router.get("/position/history/:deviceId", controller.getHistoryBydeviceId);
+router.get("/history/:deviceId", controller.getHistoryBydeviceId);
+router.get("/alert/history", controller.getHistoryBydeviceId);
 
 export default router;

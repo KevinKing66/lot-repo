@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useCallback } from "react";
 import { locationReducer, type LocationState } from "../reducers/locationReducer";
 
-const STORAGE_KEY = "sensors-data";
+const STORAGE_KEY = "gps";
 
 const defaultLocation: LocationState = {
   lat: 0,
