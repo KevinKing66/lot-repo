@@ -1,6 +1,6 @@
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import { useEffect, useReducer, useRef } from 'react';
-import { locationReducer } from '../reducers/locationReducer';
+import { useEffect, useRef } from 'react';
+import { useLocation } from '../hooks/useLocation';
 
 const containerStyle = {
   width: '100%',
@@ -8,7 +8,7 @@ const containerStyle = {
 };
 
 const MyLocationMap = () => {
-  const [position, dispatch] = useReducer(locationReducer, null);
+  const { location, setLocation } = useLocation();
   const mapRef = useRef<google.maps.Map | null>(null);
 
   const { isLoaded } = useJsApiLoader({
@@ -27,8 +27,7 @@ const MyLocationMap = () => {
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
         };
-
-        dispatch({ type: 'SET_POSITION', payload: newPosition });
+        setLocation(newPosition);
 
         
         if (mapRef.current) {
@@ -48,19 +47,19 @@ const MyLocationMap = () => {
     return () => {
       navigator.geolocation.clearWatch(watchId);
     };
-  }, []);
+  }, [setLocation]);
 
   if (!isLoaded) return <p>Cargando mapa...</p>;
-  if (!position) return <p>Obteniendo ubicación...</p>;
+  if (!location) return <p>Obteniendo ubicación...</p>;
 
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
-      center={position}
+      center={location}
       zoom={16}
       options={{ clickableIcons: false }}
     >
-      <Marker position={position} />
+      <Marker position={location} />
     </GoogleMap>
   );
 };

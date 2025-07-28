@@ -10,7 +10,7 @@ export function useAuthenticatedWebSocket() {
   const [isConnected, setIsConnected] = useState(false);
   const [sensorData, setSensorData] = useState<SensorData | null>(null);
 
-  const gps = useLocation();
+  const { location: gps } = useLocation();
   const socketRef = useRef<WebSocket | null>(null);
   const intervalRef = useRef<number | null>(null);
 

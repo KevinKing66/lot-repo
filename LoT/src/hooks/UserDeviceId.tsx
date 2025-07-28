@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const DEVICE_ID_KEY = 'deviceId';
+const DEVICE_ID_KEY = 'device-id';
 
 export const useDeviceId = (): string | null => {
   const [deviceId, setDeviceId] = useState<string | null>(null);
