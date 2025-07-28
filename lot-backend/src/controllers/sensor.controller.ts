@@ -14,9 +14,28 @@ export class SensorController {
   };
 
 
+  getHistoryBydeviceId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const deviceId = req.params.deviceId;
+    const token = req.headers.authorization;
+    if (!token){
+      res.status(400).json({ message: "Missing Authorization header" });
+      return;
+    }
+    if (!deviceId){
+      res.status(400).json({ message: "Missing required path parameter: deviceId" });
+      return;
+    }
+    console.log("pre service")
+    try {
+      const result = await this.service.findHistoryBydeviceId(deviceId);
+      res.status(200).json({ message: "Datos procesados", result });
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+
+
   getLastesPosition = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    
-    console.log("holaaaaaaaaaaaa")
     const deviceId = req.params.deviceId;
     const token = req.headers.authorization;
     console.log("if")

@@ -25,6 +25,13 @@ export class SensorService {
     return await this.repo.save(entity);
   }
 
+  async findHistoryBydeviceId(deviceId: string){
+    return await this.repo.find({
+      where: { deviceId: deviceId },
+      order: { createdAt: 'DESC' },
+    })
+  }
+
   async processSensorData(data: SensorDataDto) {
     await this.save(data);
     const { gps, fuel } = data;
