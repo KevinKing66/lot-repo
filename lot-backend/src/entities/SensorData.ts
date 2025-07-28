@@ -49,6 +49,7 @@ export class SensorData {
         speed: this.speed
       },
       temperature: this.temperature,
+      createdAt: this.createdAt.toUTCString()
     }
   }
 }

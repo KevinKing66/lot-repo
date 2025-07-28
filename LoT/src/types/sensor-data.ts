@@ -10,4 +10,5 @@ export interface SensorData {
     current: number;
     capacity?: number;
   };
+  createdAt: string | Date;
 }

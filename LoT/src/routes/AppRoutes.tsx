@@ -6,6 +6,7 @@ import { Home } from "../pages/Home";
 import { MapsPage } from "../pages/Maps";
 import ProtectedRoute from "./ProtectedRoutes";
 import HeaderComponents from "../component/headers";
+import { AlertsPage } from "../pages/Alerts";
 
 const AppRoutes: React.FC = () => {
     const { isAuthenticated } = useAuth();
@@ -18,6 +19,7 @@ const AppRoutes: React.FC = () => {
             <Routes>
                 <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 <Route path="/maps" element={<ProtectedRoute><MapsPage /></ProtectedRoute>} />
+                <Route path="/alerts" element={<ProtectedRoute><AlertsPage /></ProtectedRoute>} />
                 <Route path="/*" element={<ProtectedRoute><Navigate to="/" replace /></ProtectedRoute>} />
             </Routes>
 

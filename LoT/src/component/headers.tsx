@@ -5,8 +5,9 @@ const HeaderComponents: React.FC = () => {
     const navigate = useNavigate();
     return(
         <nav style={{display: "flex", justifyContent: "space-between"}}>
-            <span onClick={() => navigate("/")}>LoT</span>
+            <span onClick={() => navigate("/")}>Dashboard</span>
             <span onClick={() => navigate("/maps")}>Mapa</span>
+            <span onClick={() => navigate("/alerts")}>Lista de Alertas</span>
         </nav>
     )
 }

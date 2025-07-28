@@ -42,9 +42,7 @@ export class SensorController {
     }
 
     try {
-      const result = (await this.service.getHistoryByActiveAlarms())
-      .map(v => v .toDto!())
-      .map(v => {});
+      const result = await this.service.getHistoryByActiveAlarms();
       res.status(200).json(result);
     } catch (error: any) {
       res.status(400).json({ message: error.message });

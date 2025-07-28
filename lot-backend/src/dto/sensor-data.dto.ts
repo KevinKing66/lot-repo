@@ -9,5 +9,6 @@ export interface SensorDataDto {
   fuel: {
     current: number;
     capacity?: number;
-  };
+  },
+  createdAt: string;
 }

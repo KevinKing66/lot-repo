@@ -1,13 +1,14 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
 import type { SensorData } from "../types/sensor-data";
+import { formatToMMDD } from "../utils/utils";
 
 interface Props {
   data: SensorData[];
 }
 
 export const SpeedChart: React.FC<Props> = ({ data }) => {
-  const chartData = data.map((sensor, index) => ({
-    name: `#${index + 1}`,
+  const chartData = data.map((sensor) => ({
+    name: formatToMMDD(new Date(sensor.createdAt)),
     speed: sensor?.gps?.speed ?? 0
   }));
 

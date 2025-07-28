@@ -9,7 +9,7 @@ export class SensorService {
   private repo = AppDataSource.getRepository(SensorData);
   private authService = new AuthService();
 
-  async save(dto: SensorDataDto){
+  async save(dto: SensorDataDto) {
     const { deviceId, gps, temperature, fuel } = dto;
 
     const entity = this.repo.create({
@@ -21,24 +21,26 @@ export class SensorService {
       currentFuelLiters: fuel.current,
       fuelCapacityLiters: fuel.capacity,
     });
-    
+
     return await this.repo.save(entity);
   }
 
-  async findHistoryBydeviceId(deviceId: string){
+  async findHistoryBydeviceId(deviceId: string) {
     return await this.repo.find({
       where: { deviceId: deviceId },
       order: { createdAt: 'DESC' },
     })
   }
 
-  async getHistoryByActiveAlarms(){
-    return await this.repo
-    .createQueryBuilder("sensor")
-    .distinctOn(["sensor.deviceId"])
-    .orderBy("sensor.deviceId", "ASC")
-    .addOrderBy("sensor.createdAt", "DESC")
-    .getMany();
+  async getHistoryByActiveAlarms() {
+    return (await this.repo
+      .createQueryBuilder("sensor")
+      .distinctOn(["sensor.deviceId"])
+      .orderBy("sensor.deviceId", "ASC")
+      .addOrderBy("sensor.createdAt", "DESC")
+      .getMany())
+      .map(e => e.toDto!())
+      .filter(e => e.gps.speed == 0 || this.isLowFuelAlert(e));
   }
 
   async processSensorData(data: SensorDataDto) {
@@ -60,10 +62,20 @@ export class SensorService {
     };
   }
 
+  isLowFuelAlert = (dto: SensorDataDto, fuelEfficiency: number = 10) => {
+    const { gps, fuel } = dto;
+    const estimatedRangeKm = fuel.current * fuelEfficiency;
+
+    const estimatedHoursLeft =
+      gps.speed > 0 ? estimatedRangeKm / gps.speed : Infinity;
+
+    return estimatedHoursLeft < 1;
+  }
+
 
   async getLatestPosition(deviceId: string, token: string): Promise<SensorData | null> {
     const user = await this.authService.getUserFromToken(token);
-    
+
     if (!user) {
       throw ("User not Exist");
     }
