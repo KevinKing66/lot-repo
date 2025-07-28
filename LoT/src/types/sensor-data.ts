@@ -3,7 +3,7 @@ export interface SensorData {
   gps: {
     lat: number;
     lng: number;
-    speed: number;
+    speed?: number;
   };
   temperature: number;
   fuel: {

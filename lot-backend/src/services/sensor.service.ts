@@ -32,6 +32,15 @@ export class SensorService {
     })
   }
 
+  async getHistoryByActiveAlarms(){
+    return await this.repo
+    .createQueryBuilder("sensor")
+    .distinctOn(["sensor.deviceId"])
+    .orderBy("sensor.deviceId", "ASC")
+    .addOrderBy("sensor.createdAt", "DESC")
+    .getMany();
+  }
+
   async processSensorData(data: SensorDataDto) {
     await this.save(data);
     const { gps, fuel } = data;

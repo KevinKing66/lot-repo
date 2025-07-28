@@ -8,7 +8,7 @@ interface Props {
 export const SpeedChart: React.FC<Props> = ({ data }) => {
   const chartData = data.map((sensor, index) => ({
     name: `#${index + 1}`,
-    speed: sensor.gps.speed
+    speed: sensor?.gps?.speed ?? 0
   }));
 
   return (

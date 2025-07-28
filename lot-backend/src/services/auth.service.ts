@@ -23,7 +23,7 @@ export class AuthService {
     const isValid = await bcrypt.compare(password, userFromDb.password);
     if (!isValid) throw new Error("Invalid credentials");
 
-    const token = JwtUtils.generateToken({ id: userFromDb.id, email: userFromDb.email });
+    const token = JwtUtils.generateToken({ id: userFromDb.id, email: userFromDb.email, role: userFromDb.role });
     return { token };
   }
 

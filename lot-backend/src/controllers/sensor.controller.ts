@@ -17,16 +17,34 @@ export class SensorController {
   getHistoryBydeviceId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const deviceId = req.params.deviceId;
     const token = req.headers.authorization;
-    if (!token){
+    if (!token) {
       res.status(400).json({ message: "Missing Authorization header" });
       return;
     }
-    if (!deviceId){
+    if (!deviceId) {
       res.status(400).json({ message: "Missing required path parameter: deviceId" });
       return;
     }
     try {
       const result = await this.service.findHistoryBydeviceId(deviceId);
+      res.status(200).json(result.map(v => v .toDto!()));
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+
+
+  getHistoryByActiveAlarms = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const token = req.headers.authorization;
+    if (!token) {
+      res.status(400).json({ message: "Missing Authorization header" });
+      return;
+    }
+
+    try {
+      const result = (await this.service.getHistoryByActiveAlarms())
+      .map(v => v .toDto!())
+      .map(v => {});
       res.status(200).json(result);
     } catch (error: any) {
       res.status(400).json({ message: error.message });
@@ -38,15 +56,14 @@ export class SensorController {
     const deviceId = req.params.deviceId;
     const token = req.headers.authorization;
     console.log("if")
-    if (!token){
+    if (!token) {
       res.status(400).json({ message: "Missing Authorization header" });
       return;
     }
-    if (!deviceId){
-      res.status(400).json({ message: "Missing required path parameter: id" });
+    if (!deviceId) {
+      res.status(400).json({ message: "Missing required path parameter: deviceId" });
       return;
     }
-    console.log("pre service")
     try {
       const result = await this.service.getLatestPosition(deviceId, token);
       res.status(200).json({ message: "Datos procesados", ...result });

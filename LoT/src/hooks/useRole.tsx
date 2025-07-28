@@ -12,7 +12,7 @@ const init = (): SensorsState => {
     }
 };
 
-export const useSensorData = () => {
+export const useUserInfo = () => {
     const [state, dispatch] = useReducer(sensorsReducer, undefined, init);
     const deviceID = "";
 

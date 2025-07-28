@@ -5,15 +5,15 @@ import { mapToSpeedFuelChartData } from "../utils/utils";
 import { useSensorHistoryData } from "../hooks/useSensorData";
 
 export const Home = () => {
-  const {sensors: data} = useSensorHistoryData();
-  console.log("sensors: ", data);
-  const speedXFuel = mapToSpeedFuelChartData(data);
+  const {sensors} = useSensorHistoryData();
+  console.log("sensors: ", sensors);
+  const speedXFuel = mapToSpeedFuelChartData(sensors);
   return (
     <div>
       <div>DashBoard</div>
       <div>
-        <SpeedChart data={data}></SpeedChart>
-        <FuelChart data={data}></FuelChart>
+        <SpeedChart data={sensors}></SpeedChart>
+        <FuelChart data={sensors}></FuelChart>
         <SpeedFuelChart data={speedXFuel}></SpeedFuelChart>
       </div>
     </div>

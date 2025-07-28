@@ -8,7 +8,7 @@ interface Props {
 export const FuelChart: React.FC<Props> = ({ data }) => {
   const chartData = data.map((d) => ({
     name: d.deviceId,
-    fuel: d.fuel.current
+    fuel: d!.fuel?.current
   }));
 
   return (
