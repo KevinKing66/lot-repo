@@ -19,7 +19,7 @@ export function setupWebSocket(server: Server<typeof IncomingMessage, typeof Ser
     }
 
     try {
-      JwtUtils.verifyToken(token)
+      JwtUtils.verifyToken(token);
     } catch (error: unknown) {
       if (error instanceof Error) {
         ws.close(4001, error.message);
@@ -43,7 +43,7 @@ export function setupWebSocket(server: Server<typeof IncomingMessage, typeof Ser
     ws.on("message", async (data) => {
       console.log(`Received from ${user.email}:`, data.toString());
       try {
-        JwtUtils.verifyToken(token)
+        JwtUtils.verifyToken(token);
       } catch (error: unknown) {
         if (error instanceof Error) {
           ws.close(4001, error.message);
