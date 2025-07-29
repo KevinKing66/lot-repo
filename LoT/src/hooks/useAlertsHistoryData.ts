@@ -1,49 +1,42 @@
+// hooks/useAlertHistoryData.ts
 import { useEffect, useReducer } from "react";
 import { sensorsReducer, type SensorsState } from "../reducers/sensorsReducer";
-import { useDeviceId } from "./UserDeviceId";
 import { useToken } from "./useToken";
+import { getSensorAlertHistory } from "../services/sensorService";
 
-const STORAGE_KEY = "sensors-data";
+const STORAGE_KEY = "history-sensors-data";
 
 const init = (): SensorsState => {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? JSON.parse(raw) as SensorsState : { sensors: [], loading: false, error: null };
-    } catch {
-        return { sensors: [], loading: false, error: null };
-    }
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) as SensorsState : { sensors: [], loading: false, error: null };
+  } catch {
+    return { sensors: [], loading: false, error: null };
+  }
 };
 
 export const useAlertHistoryData = () => {
-    const [state, dispatch] = useReducer(sensorsReducer, undefined, init);
-    const [token,] = useToken();
-    const deviceID = useDeviceId();
+  const [state, dispatch] = useReducer(sensorsReducer, undefined, init);
+  const [token] = useToken();
 
-    useEffect(() => {
-        if (!deviceID)
-        console.log("---------------------------------------use sensor history")
-        const apiUrl = import.meta.env.VITE_API_URL;
-        const headers = {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        };
-        fetch(`${apiUrl}/sensor/alert/history`, { headers }
-        )
-            .then((res => res.json()))
-            .then((data) => {
-                console.log("then :", data);
-                dispatch({ type: "SET_DATA", payload: data });
-            })
-            .catch((error) => dispatch({ type: "FETCH_ERROR", payload: error.message }))
-            .finally(() => {
-                try {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-                } catch (e) {
-                    console.error("Error saving sensors to localStorage", e);
-                }
-            });
+  useEffect(() => {
+    if (!token) return;
+    getSensorAlertHistory(token)
+      .then((data) => {
+        dispatch({ type: "SET_DATA", payload: data });
+      })
+      .catch((error) => {
+        dispatch({ type: "FETCH_ERROR", payload: error.message });
+      })
+      .finally(() => {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          console.error("Error saving sensors to localStorage", e);
+        }
+      });
 
-    }, [deviceID, token]);
+  }, [token]);
 
-    return { sensors: state.sensors, dispatch };
+  return { sensors: state.sensors, dispatch };
 };
