@@ -1,6 +1,8 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
 import { useToken } from "../hooks/useToken";
+import { jwtDecode } from "jwt-decode";
+import type { AuthPayload } from "../types/AuthPayload";
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -8,16 +10,14 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const apiUrl = import.meta.env.VITE_API_URL;
-
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [token, setToken] = useToken();
+    const [user, setUser] = useState<AuthPayload | null>(null);
 
     const login = async (email: string, password: string) => {
         const res = await fetch(`${apiUrl}/auth/login`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
         });
 
@@ -31,11 +31,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const logout = () => {
         setToken(null);
+        setUser(null);
     };
     
     useEffect(() => {
         setIsAuthenticated(!!token);
-    }, [isAuthenticated, token])
 
-    return (<AuthContext.Provider value={{ login, logout, isAuthenticated, token }}> {children} </AuthContext.Provider>);
+        if (token) {
+            try {
+                const decoded = jwtDecode<AuthPayload>(token);
+                setUser(decoded);
+            } catch (err) {
+                console.error("Error decoding token:", err);
+                setUser(null);
+            }
+        } else {
+            setUser(null);
+        }
+    }, [token]);
+
+    return (
+        <AuthContext.Provider value={{ login, logout, isAuthenticated, token, user }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
