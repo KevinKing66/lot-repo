@@ -27,7 +27,7 @@ export class SensorController {
     }
     try {
       const result = await this.service.findHistoryBydeviceId(deviceId);
-      res.status(200).json(result.map(v => v .toDto!()));
+      res.status(200).json(result.map(v => v .toDto!()).reverse());
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }

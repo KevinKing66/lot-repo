@@ -18,7 +18,7 @@ export const SpeedFuelChart: React.FC<Props> = ({ data }) => (
     <h2>Velocidad/Combustible</h2>
     <ResponsiveContainer width="100%" height={300}>
       <LineChart data={data}>
-        <XAxis dataKey="label" />
+        <XAxis dataKey="id" />
         <YAxis yAxisId="left" label={{ value: 'km/h', angle: -90 }} />
         <YAxis yAxisId="right" orientation="right" label={{ value: 'Combustible', angle: 90 }} />
         <Tooltip />

@@ -1,5 +1,5 @@
 export interface SpeedFuelChartEntry {
-  label: string;
+  id: string;
   speed: number;
   fuel: number;
 }
