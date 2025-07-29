@@ -1,5 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, type TooltipProps } from "recharts";
-import type { SensorData } from "../types/sensor-data";
+import type { SensorData } from "../types/Sensordata";
 import { formatToMMDDHHmm } from "../utils/utils";
 import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 

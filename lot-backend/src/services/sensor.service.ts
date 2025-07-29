@@ -3,7 +3,7 @@ import { AppDataSource } from "../config/data-source";
 import { AuthService } from "./auth.service";
 import { maskDeviceId } from "../utils/mask";
 import { SensorDataDto } from "../dto/sensor-data.dto";
-import { calculateSpeed } from "../utils/geoUtils";
+import { calculateSpeed } from "../utils/geo-utils";
 
 export class SensorService {
   private repo = AppDataSource.getRepository(SensorData);

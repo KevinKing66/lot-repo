@@ -1,4 +1,4 @@
-import type { SensorData } from "../types/sensor-data";
+import type { SensorData } from "../types/Sensordata";
 
 export interface SensorsState {
     sensors: SensorData[];

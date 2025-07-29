@@ -1,5 +1,5 @@
 import React from 'react'
-import type { SensorData } from '../types/sensor-data';
+import type { SensorData } from '../types/Sensordata';
 import { formatToMMDDHHmm } from '../utils/utils';
 
 interface Props {

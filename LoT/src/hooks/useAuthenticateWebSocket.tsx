@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useToken } from './useToken';
 import { useDeviceId } from './UserDeviceId';
-import type { SensorData } from '../types/sensor-data';
+import type { SensorData } from '../types/Sensordata';
 import { useLocation } from './useLocation';
 
 export function useAuthenticatedWebSocket() {
