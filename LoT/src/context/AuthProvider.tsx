@@ -1,8 +1,8 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
 import { useToken } from "../hooks/useToken";
-import { jwtDecode } from "jwt-decode";
 import type { AuthPayload } from "../types/AuthPayload";
+import { decodeJwt } from "../utils/jwt-utils";
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         if (token) {
             try {
-                const decoded = jwtDecode<AuthPayload>(token);
+                const decoded = decodeJwt<AuthPayload>(token);
                 setUser(decoded);
             } catch (err) {
                 console.error("Error decoding token:", err);
