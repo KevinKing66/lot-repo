@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import { useAlertHistoryData } from "../hooks/sensor/useAlertsHistoryData";
-import { AlertsList } from "../component/dashboard/AlertsList";
+import { AlertsList } from "../component/alerts/AlertsList";
 
 export function AlertsPage(): JSX.Element {
   const { sensors } = useAlertHistoryData();
