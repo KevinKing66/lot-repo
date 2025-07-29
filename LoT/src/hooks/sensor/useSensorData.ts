@@ -1,8 +1,8 @@
 import { useEffect, useReducer } from "react";
-import { sensorsReducer, type SensorsState } from "../reducers/sensorsReducer";
-import { useDeviceId } from "./sensor/UserDeviceId";
-import { useToken } from "./auth/useToken";
-import { getSensorHistory } from "../services/sensorService";
+import { sensorsReducer, type SensorsState } from "../../reducers/sensorsReducer";
+import { useDeviceId } from "./UserDeviceId";
+import { useToken } from "../auth/useToken";
+import { getSensorHistory } from "../../services/sensorService";
 
 const STORAGE_KEY = "sensors-data";
 

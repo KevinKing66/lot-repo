@@ -4,9 +4,9 @@ import { Login } from "../pages/Login";
 import { Home } from "../pages/Home";
 import { MapsPage } from "../pages/Maps";
 import ProtectedRoute from "./ProtectedRoutes";
-import HeaderComponents from "../component/headers";
+import HeaderComponents from "../component/share/headers";
 import { AlertsPage } from "../pages/Alerts";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/auth/useAuth";
 
 const AppRoutes: React.FC = () => {
     const { isAuthenticated } = useAuth();

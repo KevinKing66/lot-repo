@@ -1,8 +1,8 @@
-import { FuelChart } from "../component/FuelChart";
-import { SpeedChart } from "../component/SpeedChart"
-import { SpeedFuelChart } from "../component/SpeedxFuelChart";
+import { FuelChart } from "../component/dashboard/FuelChart";
+import { SpeedChart } from "../component/dashboard/SpeedChart"
+import { SpeedFuelChart } from "../component/dashboard/SpeedxFuelChart";
 import { mapToSpeedFuelChartData } from "../utils/chart-utils";
-import { useSensorHistoryData } from "../hooks/useSensorData";
+import { useSensorHistoryData } from "../hooks/sensor/useSensorData";
 
 export const Home = () => {
   const {sensors} = useSensorHistoryData();
