@@ -84,9 +84,8 @@ export function useAuthenticatedWebSocket() {
           console.warn('❌ Token inválido, cerrando sesión');
           setToken(null);
           socket.close();
-        } else if (data.deviceId === deviceId) {
-          // setSensorData(data);
-          // sensorDataRef.current = data;
+        } else if (data.alert) {
+          alert(data.alert)
         }
       } catch (err) {
         console.error('Error parsing WebSocket message:', err);
