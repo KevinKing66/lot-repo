@@ -3,7 +3,7 @@ import { sensorsReducer, type SensorsState } from "../../reducers/sensorsReducer
 import { useToken } from "../auth/useToken";
 import { getSensorAlertHistory } from "../../services/sensorService";
 
-const STORAGE_KEY = "history-sensors-data";
+const STORAGE_KEY = "history-alerts-data";
 
 const init = (): SensorsState => {
   try {
