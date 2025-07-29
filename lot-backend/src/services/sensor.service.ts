@@ -1,9 +1,9 @@
 import { SensorData } from "../entities/SensorData";
 import { AppDataSource } from "../config/data-source";
 import { AuthService } from "./auth.service";
-import { UserRole } from "../enum/user-role.enum";
 import { maskDeviceId } from "../utils/mask";
 import { SensorDataDto } from "../dto/sensor-data.dto";
+import { calculateSpeed } from "../utils/geoUtils";
 
 export class SensorService {
   private repo = AppDataSource.getRepository(SensorData);
@@ -50,8 +50,30 @@ export class SensorService {
   }
 
   async processSensorData(data: SensorDataDto) {
-    await this.save(data);
-    const { gps, fuel } = data;
+    const last = await this.repo.findOne({
+      where: { deviceId: data.deviceId },
+      order: { createdAt: 'DESC' },
+    });
+
+    const { gps, fuel, createdAt } = data;
+    let realSpeed = gps.speed ?? 0;
+
+    if (last) {
+      realSpeed = calculateSpeed(
+        last.latitude,
+        last.longitude,
+        new Date(last.createdAt),
+        gps.lat,
+        gps.lng,
+        new Date(createdAt)
+      );
+      data.gps.speed = realSpeed;
+    }
+
+    const requireSave = hasSensorDataChanged(data, last);
+    if (requireSave) {
+      await this.save(data);
+    }
 
     const fuelEfficiency = 10;
     const estimatedRangeKm = fuel.current * fuelEfficiency;
@@ -99,4 +121,14 @@ export class SensorService {
       deviceId: user.isAdmin() ? position.deviceId : maskDeviceId(position.deviceId)
     };
   }
+}
+
+function hasSensorDataChanged(data: SensorDataDto, last: SensorData | null): boolean {
+  if (!last) return true;
+
+  const latChanged = Math.abs(data.gps.lat - last.latitude) > 0.0001;
+  const lngChanged = Math.abs(data.gps.lng - last.longitude) > 0.0001;
+  const fuelChanged = Math.abs(data.fuel.current - last.currentFuelLiters) > 0.01;
+
+  return latChanged || lngChanged || fuelChanged;
 }

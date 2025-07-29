@@ -53,7 +53,6 @@ export class SensorController {
   getLastesPosition = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const deviceId = req.params.deviceId;
     const token = req.headers.authorization;
-    console.log("if")
     if (!token) {
       res.status(400).json({ message: "Missing Authorization header" });
       return;
