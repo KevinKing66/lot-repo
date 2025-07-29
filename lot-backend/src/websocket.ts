@@ -28,7 +28,7 @@ export function setupWebSocket(server: Server<typeof IncomingMessage, typeof Ser
       }
       return;
     }
-    
+
     const authService = new AuthService();
     const user = await authService.getUserFromToken(token);
 
@@ -42,6 +42,16 @@ export function setupWebSocket(server: Server<typeof IncomingMessage, typeof Ser
 
     ws.on("message", async (data) => {
       console.log(`Received from ${user.email}:`, data.toString());
+      try {
+        JwtUtils.verifyToken(token)
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          ws.close(4001, error.message);
+        } else {
+          ws.close(4001, "Unknown error during token verification");
+        }
+        return;
+      }
       try {
         const payload = JSON.parse(data.toString()) as SensorDataDto;
         const sensorService = new SensorService();
