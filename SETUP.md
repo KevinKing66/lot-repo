@@ -72,6 +72,8 @@ node dist/index.js
 </pre>
 > (Puedes ajustar los scripts en package.json si es necesario.)
 
+### TEST
+Para hacer los test: `npm test`
 
 ## FRONTEND 
 

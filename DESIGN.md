@@ -17,7 +17,7 @@
 
 ---
 
-### 🔷 Backend: Express + TypeScript
+### 🔷 Backend: Express + TypeScript + Jest
 
 - **Express** fácil de entender y con buena documentación, aparte de estar mas familiarizado con el uso de websocket en comparacion a NestJS.
 - **TypeScript** aporta tipado estático, ayudando a detectar errores en tiempo de desarrollo y mejorando el autocompletado.
@@ -25,8 +25,8 @@
 
 ---
 
-### 🔷 Base de Datos: PostgreSQL
-
+### 🔷 Base de Datos: PostgreSQL + Docker
+- Facil y rapido de montar
 - PostgreSQL es una base de datos relacional robusta, con soporte para funciones avanzadas.
 - su velocidad
 - Es de código abierto, confiable, y bien documentado.
