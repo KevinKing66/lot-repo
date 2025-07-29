@@ -1,5 +1,6 @@
 import React from 'react'
 import type { SensorData } from '../types/sensor-data';
+import { formatToMMDDHHmm } from '../utils/utils';
 
 interface Props {
   data: SensorData[];
@@ -25,7 +26,8 @@ export const AlertsList: React.FC<Props> = ({ data }) => {
               <td>{sensor.deviceId}</td>
               <td>{sensor.gps.lat} - {sensor.gps.lng}</td>
               <td>{sensor.gps.speed}</td>
-              <td>{sensor.fuel.current} / {sensor.fuel.capacity}</td>
+              <td>{sensor.fuel.current}L de {sensor.fuel.capacity}L</td>
+              <td>{sensor.createdAt ? formatToMMDDHHmm(sensor.createdAt) : ""}</td>
             </tr>
           ))}
         </tbody>

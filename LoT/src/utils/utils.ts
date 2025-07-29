@@ -15,11 +15,11 @@ export const formatToMMDD = (date: Date) => date.toLocaleDateString("en-US", {
   day: "2-digit"
 });
 
-export const formatToMMDDHHmm = (date: Date): string => {
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  const hh = String(date.getHours()).padStart(2, "0");
-  const min = String(date.getMinutes()).padStart(2, "0");
-  const sg = String(date.getMinutes()).padStart(2, "0");
-  return `${mm}-${dd} ${hh}:${min}:${sg}`;
-};
+export const formatToMMDDHHmm = (value: Date | string | number): string => {
+  const date = new Date(value);
+  if (isNaN(date.getTime())) return "Invalid date";
+
+  const pad = (n: number) => n.toString().padStart(2, "0");
+
+  return `${pad(date.getMonth() + 1)}/${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
