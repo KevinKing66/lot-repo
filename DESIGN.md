@@ -19,7 +19,7 @@
 
 ### 🔷 Backend: Express + TypeScript
 
-- **Express** es un framework minimalista, fácil de entender y con buena documentación, aparte de estar mas familiarizado con el uso de websocket en comparacion a NestJS.
+- **Express** fácil de entender y con buena documentación, aparte de estar mas familiarizado con el uso de websocket en comparacion a NestJS.
 - **TypeScript** aporta tipado estático, ayudando a detectar errores en tiempo de desarrollo y mejorando el autocompletado.
 
 
@@ -39,12 +39,4 @@
 
 ## Alternativas Consideradas
 
-- **MongoDB:** descartado por falta de consistencia relacional fuerte.
 - **NestJS:** más robusto, pero mayor curva de aprendizaje frente a Express.
-- **Next.js:** ideal para SSR, pero innecesario si la app es estrictamente SPA.
-
----
-
-## Conclusión
-
-El stack elegido balancea simplicidad, velocidad de desarrollo y robustez. Es ideal para aplicaciones de tamaño medio con necesidad de control estricto en el backend y una interfaz web interactiva.
