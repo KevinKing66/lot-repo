@@ -56,7 +56,8 @@ export function useAuthenticatedWebSocket() {
       fuel: {
         current: 5,
         capacity: 50
-      }
+      },
+      createdAt: new Date()
     });
 
     socket.onopen = () => {
