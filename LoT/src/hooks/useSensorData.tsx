@@ -20,7 +20,7 @@ export const useSensorHistoryData = () => {
     const deviceID = useDeviceId();
 
     useEffect(() => {
-        if (!deviceID)
+        if (!deviceID) return;
         console.log("---------------------------------------use sensor history")
         const apiUrl = import.meta.env.VITE_API_URL;
         const headers = {
@@ -32,16 +32,10 @@ export const useSensorHistoryData = () => {
             .then((res => res.json()))
             .then((data) => {
                 console.log("then :", data);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({...state, sensors: data}));
                 dispatch({ type: "SET_DATA", payload: data });
             })
-            .catch((error) => dispatch({ type: "FETCH_ERROR", payload: error.message }))
-            .finally(() => {
-                try {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-                } catch (e) {
-                    console.error("Error saving sensors to localStorage", e);
-                }
-            });
+            .catch((error) => dispatch({ type: "FETCH_ERROR", payload: error.message }));
 
     }, [deviceID, token]);
 
