@@ -1,4 +1,4 @@
-function base64url(input: string | Buffer) {
+export function base64url(input: string | Buffer) {
   return Buffer.from(input)
     .toString("base64")
     .replace(/=/g, "") // remove padding
@@ -6,7 +6,7 @@ function base64url(input: string | Buffer) {
     .replace(/\//g, "_");
 }
 
-function base64urlDecode(str: string) {
+export function base64urlDecode(str: string) {
   str = str.replace(/-/g, "+").replace(/_/g, "/");
   while (str.length % 4 !== 0) {
     str += "=";

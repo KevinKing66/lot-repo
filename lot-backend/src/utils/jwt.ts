@@ -1,6 +1,7 @@
 import "dotenv/config";
 
 import crypto from "crypto";
+import { base64url, base64urlDecode } from "./base64-util";
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret123";
 
