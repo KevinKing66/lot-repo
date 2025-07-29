@@ -1,7 +1,7 @@
 import { FuelChart } from "../component/FuelChart";
 import { SpeedChart } from "../component/SpeedChart"
 import { SpeedFuelChart } from "../component/SpeedxFuelChart";
-import { mapToSpeedFuelChartData } from "../utils/utils";
+import { mapToSpeedFuelChartData } from "../utils/chart-utils";
 import { useSensorHistoryData } from "../hooks/useSensorData";
 
 export const Home = () => {

@@ -1,6 +1,6 @@
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, type TooltipProps } from "recharts";
 import type { SensorData } from "../types/Sensordata";
-import { formatToMMDDHHmm } from "../utils/utils";
+import { formatToMMDDHHmm } from "../utils/date-utils";
 import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 interface Props {
