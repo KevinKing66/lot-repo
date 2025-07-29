@@ -10,6 +10,7 @@ export const Home = () => {
   const speedXFuel = mapToSpeedFuelChartData(sensors);
   return (
     <div>
+      <h1>Dashboard</h1>
       <div>
         <SpeedChart data={sensors}></SpeedChart>
         <FuelChart data={sensors}></FuelChart>

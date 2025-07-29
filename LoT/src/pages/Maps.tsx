@@ -4,7 +4,7 @@ import MyLocationMap from "../component/MyLocationMap";
 export function MapsPage(): JSX.Element {
   return (
     <div>
-      <p>Tu ubicacacion actual</p>
+      <h1>Tu ubicacacion actual</h1>
       <div>
         <MyLocationMap></MyLocationMap>
       </div>

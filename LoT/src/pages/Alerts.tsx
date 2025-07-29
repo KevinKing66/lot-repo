@@ -15,7 +15,7 @@ export function AlertsPage(): JSX.Element {
   
   return (
     <div>
-      <p>alerta</p>
+      <h1>alerta</h1>
       <div>
         <AlertsList data={sensors}></AlertsList>
       </div>
