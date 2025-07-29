@@ -31,7 +31,7 @@ export function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-80">
+    <form onSubmit={handleSubmit} className="m-auto bg-zinc-900 p-6 rounded shadow-md w-80">
       <h2 className="text-xl mb-4">Login</h2>
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
       <input
