@@ -1,4 +1,3 @@
-// hooks/useAlertHistoryData.ts
 import { useEffect, useReducer } from "react";
 import { sensorsReducer, type SensorsState } from "../reducers/sensorsReducer";
 import { useToken } from "./useToken";
