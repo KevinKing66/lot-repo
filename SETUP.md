@@ -15,14 +15,17 @@
 1. LoT: Esta es el frontend (React + Vite)
 - src: Código fuente principal del proyecto.
 - src/assets: Archivos estáticos como imágenes, íconos o fuentes.
-- src/component: Componentes reutilizables.
-- src/context: Contextos globales de React (como autenticación, tema, usuario, etc.).
-- src/hooks: Custom hooks reutilizables para lógica compartida entre componentes.
-- src/pages: Vistas principales del sistema, cada una asociada a una ruta.
-- src/reducers: Reducers para el manejo del estado local o global con useReducer o context.
-- src/routes: Definición de las rutas de navegación y componentes asociados.
-- src/types: Tipos e interfaces TypeScript globales (DTOs, enums, etc.).
-- src/utils: Funciones utilitarias generales (como helpers de fecha, cálculos, etc.).
+- src/features: Los módulos funcionales separados por dominio.
+- src/core: Contiene la lógica esencial y de arranque del sistema.
+- src/shared: Código reutilizable entre varios features
+- component: Componentes reutilizables.
+- context: Contextos globales de React (como autenticación, tema, usuario, etc.).
+- hooks: Custom hooks reutilizables para lógica compartida entre componentes.
+- pages: Vistas principales del sistema, cada una asociada a una ruta.
+- reducers: Reducers para el manejo del estado local o global con useReducer o context.
+- routes: Definición de las rutas de navegación y componentes asociados.
+- types: Tipos e interfaces TypeScript globales (DTOs, enums, etc.).
+- utils: Funciones utilitarias generales (como helpers de fecha, cálculos, etc.).
 
 2. lot-backend: es el backend (Express + TypeScript)
 src: Código fuente principal del backend.

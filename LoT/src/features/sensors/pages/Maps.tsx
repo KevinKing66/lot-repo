@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import MyLocationMap from "../component/maps/MyLocationMap";
+import MyLocationMap from "../componets/MyLocationMap";
 
 export function MapsPage(): JSX.Element {
   return (

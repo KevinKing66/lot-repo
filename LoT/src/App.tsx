@@ -1,8 +1,8 @@
 import './App.css'
-import { AuthProvider } from './context/AuthProvider';
-import { useAuthenticatedWebSocket } from './hooks/auth/useAuthenticateWebSocket';
-import { useDeviceId } from './hooks/sensor/UserDeviceId';
-import AppRoutes from './routes/AppRoutes'
+import AppRoutes from './core/routes/AppRoutes'
+import { AuthProvider } from './features/auth/context/AuthProvider';
+import { useAuthenticatedWebSocket } from './features/auth/hooks/useAuthenticateWebSocket';
+import { useDeviceId } from './features/sensors/hooks/UserDeviceId';
 
 function App() {
   useDeviceId();

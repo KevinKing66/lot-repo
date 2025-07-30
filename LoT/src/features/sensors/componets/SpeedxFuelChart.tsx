@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   ResponsiveContainer
 } from "recharts";
-import type { SpeedFuelChartEntry } from "../../types/SpeedFuelChart";
+import type { SpeedFuelChartEntry } from "../types/SpeedFuelChart";
 
 interface Props {
   data: SpeedFuelChartEntry[];

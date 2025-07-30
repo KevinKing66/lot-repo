@@ -1,6 +1,6 @@
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { useEffect, useRef } from 'react';
-import { useLocation } from '../../hooks/sensor/useLocation';
+import { useLocation } from '../hooks/useLocation';
 
 const containerStyle = {
   width: '100%',

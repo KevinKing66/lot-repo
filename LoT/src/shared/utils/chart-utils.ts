@@ -1,5 +1,5 @@
-import type { SensorData } from "../types/Sensordata";
-import type { SpeedFuelChartEntry } from "../types/SpeedFuelChart";
+import type { SensorData } from "../../sensors/types/Sensordata";
+import type { SpeedFuelChartEntry } from "../../sensors/types/SpeedFuelChart";
 
 export const mapToSpeedFuelChartData = (data: SensorData[]): SpeedFuelChartEntry[] => {
   return data.map((item, index) => ({

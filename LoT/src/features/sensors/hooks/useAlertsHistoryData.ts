@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
-import { sensorsReducer, type SensorsState } from "../../reducers/sensorsReducer";
-import { useToken } from "../auth/useToken";
-import { getSensorAlertHistory } from "../../services/sensorService";
+import { sensorsReducer, type SensorsState } from "../reducers/sensorsReducer";
+import { getSensorAlertHistory } from "../services/sensorService";
+import { useToken } from "../../auth/hooks/useToken";
 
 const STORAGE_KEY = "history-alerts-data";
 

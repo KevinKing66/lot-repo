@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useCallback } from "react";
-import { locationReducer, type LocationState } from "../../reducers/locationReducer";
+import { locationReducer, type LocationState } from "../reducers/locationReducer";
 
 const STORAGE_KEY = "gps";
 

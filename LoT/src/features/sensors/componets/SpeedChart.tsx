@@ -1,7 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, type TooltipProps } from "recharts";
-import type { SensorData } from "../../types/Sensordata";
+import type { SensorData } from "../types/Sensordata";
 import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
-import { formatToMMDDHHmm } from "../../utils/date-utils";
+import { formatToMMDDHHmm } from "../../../shared/utils/date-utils";
 
 interface Props {
   data: SensorData[];
